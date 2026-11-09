@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# macOS
+.DS_Store
+
+# local high scores and saved LAN games (runtime state, not source)
+*/highscore.json
+connect-four/records/
+
+# crash / debug logs
+*.log

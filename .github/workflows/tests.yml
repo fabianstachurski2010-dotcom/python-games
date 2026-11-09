@@ -1,0 +1,46 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  selftest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Tkinter is not part of the runner image, and pygame needs a display even
+      # for the logic tests, so everything runs under a virtual X server.
+      - name: install dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq python3-tk xvfb
+          python -m pip install --quiet --upgrade pip
+          python -m pip install --quiet pygame numpy
+
+      - name: byte-compile every game
+        run: python -m compileall -q .
+
+      - name: selftest every game
+        run: |
+          set -euo pipefail
+          run() {
+            echo "::group::${1}"
+            ( cd "$1" && xvfb-run -a python3 "$2" --selftest )
+            echo "::endgroup::"
+          }
+          run battleship    battleship.py
+          run chomp         chomp.py
+          run connect-four  connect_four.py
+          run flappy        flappy.py
+          run pong          pong.py
+          run shooter       shooter.py
+          run snake         snake.py
+          run tic-tac-toe   tic_tac_toe.py
