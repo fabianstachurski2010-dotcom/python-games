@@ -5,6 +5,8 @@ download. Everything is **Python 3.10+** and either **Tkinter** (standard librar
 or **pygame**. Every game has a `--selftest` mode that runs its logic tests
 headlessly, and CI runs all eight on every push.
 
+![tests](https://github.com/kyle2241345145351324321/python-games/actions/workflows/tests.yml/badge.svg)
+
 | Folder | Game | What it is | Needs |
 |---|---|---|---|
 | [`battleship/`](battleship/) | Battleship LAN 海戰棋 | 10×10 battleship — a friend on the same Wi-Fi (UDP discovery) or a three-level AI | Tkinter |
